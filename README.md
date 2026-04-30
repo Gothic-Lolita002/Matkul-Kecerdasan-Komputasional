@@ -1,6 +1,7 @@
     import random
     import matplotlib.pyplot as plt
-    
+Bagian ini menunjukkan pemanggilan Library random dan matplotlib.pyplot
+#
 DATA BARANG
 
     items = [
@@ -19,7 +20,8 @@ DATA BARANG
     GENERATIONS = 100
     MUTATION_RATE = 0.2
     ELITE_SIZE = 2
-vxvxv
+Bagian ini menunjukkan list data barang, Batasan Kapasitas (MAX_WEIGHT), serta Parameter 
+Algoritma Genetika yang mengatur bagaimana pengembangan solusi akan berjalan:
 #
 INIT
 
@@ -28,7 +30,10 @@ INIT
     
     def init_population():
         return [create_individual() for _ in range(POP_SIZE)]
-    
+Bagian ini menunjukkan proses pembentukan individu dan populasi awal, Fungsi create_individual()
+Fungsi ini bertujuan untuk membuat satu solusi acak biasanya disebut individu, Fungsi init_population()
+ini bertugas membuat kelompok besar dari individu-individu acak di atas untuk memulai proses evolusi.
+#
 FITNESS
 
     def fitness(individual):
@@ -45,18 +50,22 @@ FITNESS
             return 0
     
         return total_value
-
+Bagian ini menunjukkan Fungsi yang bertugas untuk memberikan nilai kualitas pada setiap kandidat solusi (individu).
+#
 SELECTION
 
     def selection(pop):
         return max(random.sample(pop, 3), key=fitness)
-    
+Bagian ini menunjukkan Fungsi yang memastikan bahwa individu yang memiliki total nilai barang tinggi (dan berat di bawah 7) 
+memiliki peluang lebih besar untuk terpilih sebagai induk, namun tetap membiarkan adanya unsur keberuntungan.
+#
 CROSSOVER
 
     def crossover(p1, p2):
         point = random.randint(1, len(p1)-1)
         return p1[:point] + p2[point:]
-
+Bagian ini menunjukkan Fungsi crossover(p1, p2) yang dalam gambar tersebut adalah implementasi dari Single-Point Crossover (Persilangan Satu Titik). Ini adalah tahap "reproduksi" di mana dua orang tua (parents) digabungkan untuk menghasilkan anak (offspring) yang membawa sifat dari keduanya.
+#
 MUTATION
 
     def mutate(ind):
@@ -64,7 +73,10 @@ MUTATION
             if random.random() < MUTATION_RATE:
                 ind[i] = 1 - ind[i]
         return ind
-
+Bagian ini menunjukkan Fungsi mutate(ind) yang ada pada gambar tersebut adalah tahap Mutasi. 
+Jika tahap crossover sebelumnya bertujuan untuk menggabungkan sifat induk, 
+maka mutasi bertujuan untuk memberikan perubahan acak guna menjaga variasi genetik dalam populasi.
+#
 ANALISIS
 
     def decode(ind):
@@ -117,10 +129,8 @@ GA
                 new_pop.append(child)
     
             pop = new_pop
-  
-      # =====================================================
-      # HASIL
-      # =====================================================
+HASIL
+
       best = sorted(pop, key=fitness, reverse=True)[0]
       selected, weight, value = decode(best)
   
@@ -134,9 +144,9 @@ GA
       else:
           print("Penjelasan: Melebihi kapasitas (tidak valid).")
   
-      # =====================================================
-      # VISUAL
-      # =====================================================
+
+VISUAL
+
       plt.figure()
       plt.plot(best_hist)
       plt.plot(avg_hist)
@@ -148,5 +158,5 @@ GA
       plt.show()
   
   
-  # RUN
+RUN
   GA()
