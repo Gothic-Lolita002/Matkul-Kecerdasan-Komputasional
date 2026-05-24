@@ -1,0 +1,92 @@
+# Program Penilaian Mahasiswa (Absensi & Keaktifan)
+
+# List untuk menampung seluruh data mahasiswa
+daftar_mahasiswa = []
+TOTAL_PERTEMUAN = 16
+
+print("=== Program Penilaian Mahasiswa ===")
+print("------------------------------------------")
+
+# 1. Perulangan untuk mengambil input beberapa mahasiswa
+while True:
+    nama = input("\nMasukkan Nama Mahasiswa: ")
+    nim = input("Masukkan NIM Mahasiswa: ")
+    hadir = int(input("Masukkan Jumlah Kehadiran (0-16) = "))
+    tugas = (input("Masukkan Status Tugas, L=Lengkap / TL=Tidak Lengkap (L/TL) = "))
+    
+    
+    # Hitung persentase kehadiran
+    persentase_hadir = (hadir / TOTAL_PERTEMUAN) * 100
+    
+    # Logika If-Else untuk Status Absensi
+    if persentase_hadir >= 75:
+        status_absensi = "LULUS"
+    else:
+        status_absensi = "TIDAK LULUS"
+
+    # Logika If-Else untuk Status Tugas
+    if tugas == "L" :
+        status_tugas = "LENGKAP"
+    else :
+        status_tugas = "TIDAK LENGKAP"
+
+    # Logika If-Else untuk Predikat Keaktifan
+    if persentase_hadir >= 75:
+        tugas == "L"
+        predikat_keaktifan = "AKTIF"
+    elif persentase_hadir <= 75:
+        tugas == "L"
+        predikat_keaktifan = "TIDAK AKTIF"
+    elif persentase_hadir >= 75:
+        tugas == "TL"
+        predikat_keaktifan = "AKTIF"
+    else:
+        predikat_keaktifan = "TIDAK AKTIF"
+
+     # Logika If-Else untuk Predikat Keaktifan
+    if persentase_hadir >= 75 and tugas == "L" :
+        status_keterangan = "Mahasiswa Disiplin"
+    else:
+        status_keterangan = "-"
+
+    # Simpan data mahasiswa dalam bentuk kamus (dictionary) ke dalam list
+    mahasiswa = {
+        'nim': nim,
+        'nama': nama,
+        'persen_absen': f"{persentase_hadir:.1f}%",
+        'status': status_absensi,
+        'tugas' : status_tugas,
+        'predikat': predikat_keaktifan,
+        'keterangan': status_keterangan
+    }
+    daftar_mahasiswa.append(mahasiswa)
+    
+    # Tanya apakah ingin menambah data lagi
+    tambah_lagi = input("\nApakah ingin menambah data mahasiswa lain? y=Ya / n=Tidak (y/n): ").lower()
+    if tambah_lagi != 'y':
+        break
+
+# Menampilkan Output Semua Data dalam Bentuk Tabel Rekapitulasi
+print("\n" + "="*125)
+print(f"| {'Program Penilaian Mahasiswa':^119} |")
+print("="*125)
+print(f"| {'NIM':<12} | {'Nama Mahasiswa':<22} | {'Absensi':<10} | {'Status Absen':<13} | {'Status Tugas':<14} | {'Keaktifan':<12} | {'Keterangan':<18} |")
+print("-"*125)
+
+# Inisialisasi variabel penghitung (counter) sebelum perulangan
+jumlah_mahasiswa_aktif = 0
+
+# Lakukan perulangan untuk mencetak isi list ke dalam baris tabel
+for mhs in daftar_mahasiswa:
+    print(f"| {mhs['nim']:<12} | {mhs['nama']:<22} | {mhs['persen_absen']:<10} | {mhs['status']:<13} | {mhs['tugas']:<14} | {mhs['predikat']:<12} | {mhs['keterangan']:<18} |")
+
+# Kondisi IF untuk menghitung mahasiswa yang kategorinya BUKAN "AKTIF"
+    if mhs['predikat'] != "TIDAK AKTIF":
+        jumlah_mahasiswa_aktif += 1
+
+print("="*125)
+# Menampilkan hasil perhitungan di bawah tabel
+print(f"Total seluruh mahasiswa             : {len(daftar_mahasiswa)} mahasiswa")
+print(f"Jumlah mahasiswa yang AKTIF         : {jumlah_mahasiswa_aktif} mahasiswa")
+print(f"Jumlah mahasiswa yang TIDAK AKTIF   : {len(daftar_mahasiswa) - jumlah_mahasiswa_aktif} mahasiswa")
+print("="*125)
